@@ -34,5 +34,7 @@
 	</table>
 	<br/>
 	<a href="<c:url value='/new' />">Add New Employee</a>
+	<br/>
+	Page ${page + 1} of ${totalPages} (total ${total})
 </body>
 </html>

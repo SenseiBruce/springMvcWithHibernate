@@ -12,11 +12,14 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.websystique.springmvc.model.Employee;
 import com.websystique.springmvc.service.EmployeeService;
 import com.websystique.springmvc.service.EmployeeValidationService;
+import com.websystique.springmvc.service.PageResult;
 import com.websystique.springmvc.service.ValidationResult;
+import com.websystique.springmvc.util.SsnValidator;
 
 @Controller
 @RequestMapping("/")
@@ -32,10 +35,16 @@ public class AppController {
 	 * This method will list all existing employees.
 	 */
 	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
-	public String listEmployees(ModelMap model) {
+	public String listEmployees(@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size, ModelMap model) {
 
-		List<Employee> employees = service.findAllEmployees();
-		model.addAttribute("employees", employees);
+		List<Employee> all = service.findAllEmployees();
+		PageResult<Employee> pageResult = PageResult.of(all, page, size);
+		model.addAttribute("employees", pageResult.getItems());
+		model.addAttribute("page", pageResult.getPage());
+		model.addAttribute("size", pageResult.getSize());
+		model.addAttribute("total", pageResult.getTotal());
+		model.addAttribute("totalPages", pageResult.getTotalPages());
 		return "allemployees";
 	}
 
@@ -81,6 +90,11 @@ public class AppController {
 	 */
 	@RequestMapping(value = { "/edit-{ssn}-employee" }, method = RequestMethod.GET)
 	public String editEmployee(@PathVariable String ssn, ModelMap model) {
+		if (!SsnValidator.isWellFormed(ssn)) {
+			model.addAttribute("apiError", "SSN_PATH_INVALID");
+			model.addAttribute("success", "Invalid SSN path value");
+			return "success";
+		}
 		Employee employee = service.findEmployeeBySsn(ssn);
 		model.addAttribute("employee", employee);
 		model.addAttribute("edit", true);
@@ -94,6 +108,11 @@ public class AppController {
 	@RequestMapping(value = { "/edit-{ssn}-employee" }, method = RequestMethod.POST)
 	public String updateEmployee(@Valid Employee employee, BindingResult result,
 			ModelMap model, @PathVariable String ssn) {
+
+		if (!SsnValidator.isWellFormed(ssn)) {
+			model.addAttribute("apiError", "SSN_PATH_INVALID");
+			return "registration";
+		}
 
 		if (result.hasErrors()) {
 			return "registration";
@@ -117,7 +136,12 @@ public class AppController {
 	 * This method will delete an employee by it's SSN value.
 	 */
 	@RequestMapping(value = { "/delete-{ssn}-employee" }, method = RequestMethod.GET)
-	public String deleteEmployee(@PathVariable String ssn) {
+	public String deleteEmployee(@PathVariable String ssn, ModelMap model) {
+		if (!SsnValidator.isWellFormed(ssn)) {
+			model.addAttribute("apiError", "SSN_PATH_INVALID");
+			model.addAttribute("success", "Invalid SSN path value");
+			return "success";
+		}
 		service.deleteEmployeeBySsn(ssn);
 		return "redirect:/list";
 	}

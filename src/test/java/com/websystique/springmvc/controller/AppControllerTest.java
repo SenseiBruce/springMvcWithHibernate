@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -19,7 +20,7 @@ import org.mockito.Spy;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.websystique.springmvc.model.Employee;
@@ -41,24 +42,36 @@ public class AppControllerTest {
 	@Spy
 	List<Employee> employees = new ArrayList<Employee>();
 
-	@Spy
-	ModelMap model;
+	ModelMap model = new ModelMap();
 
 	@Mock
 	BindingResult result;
 
-	@BeforeClass
+	@BeforeMethod
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
+		employees = new ArrayList<Employee>();
 		employees = getEmployeeList();
+		model = new ModelMap();
 	}
 
 	@Test
 	public void listEmployees() {
 		when(service.findAllEmployees()).thenReturn(employees);
-		Assert.assertEquals(appController.listEmployees(model), "allemployees");
+		Assert.assertEquals(appController.listEmployees(0, 10, model), "allemployees");
 		Assert.assertEquals(model.get("employees"), employees);
+		Assert.assertEquals(model.get("total"), 2);
 		verify(service, atLeastOnce()).findAllEmployees();
+	}
+
+	@Test
+	public void listEmployeesPaginatesResults() {
+		when(service.findAllEmployees()).thenReturn(employees);
+		Assert.assertEquals(appController.listEmployees(0, 1, model), "allemployees");
+		@SuppressWarnings("unchecked")
+		List<Employee> page = (List<Employee>) model.get("employees");
+		Assert.assertEquals(page.size(), 1);
+		Assert.assertEquals(model.get("totalPages"), 2);
 	}
 
 	@Test
@@ -87,7 +100,7 @@ public class AppControllerTest {
 		String view = appController.saveEmployee(invalid, result, model);
 
 		Assert.assertEquals(view, "registration");
-		verify(service, org.mockito.Mockito.never()).saveEmployee(any(Employee.class));
+		verify(service, never()).saveEmployee(any(Employee.class));
 	}
 
 	@Test
@@ -101,7 +114,7 @@ public class AppControllerTest {
 		String view = appController.updateEmployee(invalid, result, model, "!!");
 
 		Assert.assertEquals(view, "registration");
-		verify(service, org.mockito.Mockito.never()).updateEmployee(any(Employee.class));
+		verify(service, never()).updateEmployee(any(Employee.class));
 	}
 
 	@Test
@@ -142,10 +155,18 @@ public class AppControllerTest {
 	}
 
 	@Test
+	public void editEmployeeRejectsMalformedSsnPath() {
+		Assert.assertEquals(appController.editEmployee("!!", model), "success");
+		Assert.assertEquals(model.get("apiError"), "SSN_PATH_INVALID");
+		verify(service, never()).findEmployeeBySsn(anyString());
+	}
+
+	@Test
 	public void updateEmployeeWithValidationError() {
 		when(result.hasErrors()).thenReturn(true);
 		doNothing().when(service).updateEmployee(any(Employee.class));
-		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model, ""), "registration");
+		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model, "XXX111"),
+				"registration");
 	}
 
 	@Test
@@ -153,7 +174,8 @@ public class AppControllerTest {
 		when(result.hasErrors()).thenReturn(false);
 		when(validationService.validateForWrite(any(Employee.class)))
 				.thenReturn(ValidationResult.error("ssn", "SSN_DUPLICATE", "non unique"));
-		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model, ""), "registration");
+		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model, "XXX111"),
+				"registration");
 		Assert.assertEquals(model.get("apiError"), "SSN_DUPLICATE");
 	}
 
@@ -162,14 +184,30 @@ public class AppControllerTest {
 		when(result.hasErrors()).thenReturn(false);
 		when(validationService.validateForWrite(any(Employee.class))).thenReturn(ValidationResult.ok());
 		doNothing().when(service).updateEmployee(any(Employee.class));
-		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model, ""), "success");
+		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model, "XXX111"), "success");
 		Assert.assertEquals(model.get("success"), "Employee Axel updated successfully");
+	}
+
+	@Test
+	public void updateEmployeeRejectsMalformedSsnPath() {
+		when(result.hasErrors()).thenReturn(false);
+		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model, "!!"),
+				"registration");
+		Assert.assertEquals(model.get("apiError"), "SSN_PATH_INVALID");
+		verify(service, never()).updateEmployee(any(Employee.class));
 	}
 
 	@Test
 	public void deleteEmployee() {
 		doNothing().when(service).deleteEmployeeBySsn(anyString());
-		Assert.assertEquals(appController.deleteEmployee("123"), "redirect:/list");
+		Assert.assertEquals(appController.deleteEmployee("XXX111", model), "redirect:/list");
+	}
+
+	@Test
+	public void deleteEmployeeRejectsMalformedSsnPath() {
+		Assert.assertEquals(appController.deleteEmployee("!!", model), "success");
+		Assert.assertEquals(model.get("apiError"), "SSN_PATH_INVALID");
+		verify(service, never()).deleteEmployeeBySsn(anyString());
 	}
 
 	public List<Employee> getEmployeeList() {
