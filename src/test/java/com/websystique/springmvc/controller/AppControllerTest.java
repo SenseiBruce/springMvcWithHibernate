@@ -77,6 +77,34 @@ public class AppControllerTest {
 	}
 
 	@Test
+	public void saveEmployeeRejectsWhenBindingResultHasBeanValidationErrors() {
+		Employee invalid = new Employee();
+		invalid.setName("Al");
+		invalid.setSsn("");
+		invalid.setSalary(null);
+		when(result.hasErrors()).thenReturn(true);
+
+		String view = appController.saveEmployee(invalid, result, model);
+
+		Assert.assertEquals(view, "registration");
+		verify(service, org.mockito.Mockito.never()).saveEmployee(any(Employee.class));
+	}
+
+	@Test
+	public void updateEmployeeRejectsWhenBindingResultHasBeanValidationErrors() {
+		Employee invalid = new Employee();
+		invalid.setId(1);
+		invalid.setName("x");
+		invalid.setSsn("!!");
+		when(result.hasErrors()).thenReturn(true);
+
+		String view = appController.updateEmployee(invalid, result, model, "!!");
+
+		Assert.assertEquals(view, "registration");
+		verify(service, org.mockito.Mockito.never()).updateEmployee(any(Employee.class));
+	}
+
+	@Test
 	public void saveEmployeeWithInvalidSsnFormat() {
 		when(result.hasErrors()).thenReturn(false);
 		when(validationService.validateForWrite(any(Employee.class)))
