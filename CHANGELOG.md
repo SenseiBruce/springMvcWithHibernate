@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.4] - 2026-08-21
+
+### Removed
+- `package.json` npm wrapper (misclassified the Maven repo and hurt dependency health)
+
+### Added
+- SSN path-variable validation on edit/update/delete
+- `PageResult` pagination for `/list?page=&size=`
+- Unchecked-exception handling with MDC-tagged structured error logs
+
 ## [1.0.3] - 2026-08-21
 
 ### Added
