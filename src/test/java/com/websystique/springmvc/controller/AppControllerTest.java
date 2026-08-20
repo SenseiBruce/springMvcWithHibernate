@@ -77,6 +77,15 @@ public class AppControllerTest {
 	}
 
 	@Test
+	public void saveEmployeeWithInvalidSsnFormat() {
+		Employee emp = employees.get(0);
+		emp.setSsn("!!");
+		when(result.hasErrors()).thenReturn(false);
+		Assert.assertEquals(appController.saveEmployee(emp, result, model), "registration");
+		emp.setSsn("XXX111");
+	}
+
+	@Test
 	public void saveEmployeeWithValidationErrorNonUniqueSSN() {
 		when(result.hasErrors()).thenReturn(false);
 		when(service.isEmployeeSsnUnique(anyInt(), anyString())).thenReturn(false);

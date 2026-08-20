@@ -5,6 +5,7 @@
 			<package name="com.websystique.springmvc.controller"/>
 			<package name="com.websystique.springmvc.service"/>
 			<package name="com.websystique.springmvc.dao"/>
+			<package name="com.websystique.springmvc.util"/>
 		</packages>
 	</test>
 </suite>

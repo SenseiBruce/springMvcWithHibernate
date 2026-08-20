@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.websystique.springmvc.model.Employee;
 import com.websystique.springmvc.service.EmployeeService;
+import com.websystique.springmvc.util.SsnValidator;
 
 @Controller
 @RequestMapping("/")
@@ -71,6 +72,12 @@ public class AppController {
 		 * custom errors outside the validation framework as well while still using
 		 * internationalized messages.
 		 */
+		if (!SsnValidator.isWellFormed(employee.getSsn())) {
+			FieldError ssnError = new FieldError("employee", "ssn", "SSN format is invalid");
+			result.addError(ssnError);
+			return "registration";
+		}
+
 		if (!service.isEmployeeSsnUnique(employee.getId(), employee.getSsn())) {
 			FieldError ssnError = new FieldError("employee", "ssn",
 					messageSource.getMessage("non.unique.ssn",
