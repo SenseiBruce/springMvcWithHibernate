@@ -18,9 +18,18 @@ public class MetricsController {
 
 	private final AtomicLong healthChecks = new AtomicLong();
 	private final AtomicLong metricsScrapes = new AtomicLong();
+	private final AtomicLong errorsTotal = new AtomicLong();
 
 	public void recordHealthCheck() {
 		healthChecks.incrementAndGet();
+	}
+
+	public void recordError() {
+		errorsTotal.incrementAndGet();
+	}
+
+	public long getErrorsTotal() {
+		return errorsTotal.get();
 	}
 
 	@RequestMapping(value = "/metrics", method = RequestMethod.GET,
@@ -31,6 +40,7 @@ public class MetricsController {
 		Map<String, Object> body = new LinkedHashMap<String, Object>();
 		body.put("health_checks_total", healthChecks.get());
 		body.put("metrics_scrapes_total", metricsScrapes.get());
+		body.put("errors_total", errorsTotal.get());
 		return body;
 	}
 }

@@ -1,5 +1,7 @@
 package com.websystique.springmvc.controller;
 
+import java.util.Map;
+
 import org.slf4j.MDC;
 import org.springframework.ui.ModelMap;
 import org.testng.Assert;
@@ -33,5 +35,18 @@ public class GlobalExceptionHandlerTest {
 		Assert.assertEquals(error.getCode(), "EMPLOYEE_NOT_FOUND");
 		Assert.assertEquals(error.getRequestId(), "req-42");
 		Assert.assertEquals(error.getMessage(), "Employee not found with id: 42");
+	}
+
+	@Test
+	public void handleEmployeeNotFoundIncrementsErrorMetric() {
+		GlobalExceptionHandler handler = new GlobalExceptionHandler();
+		MetricsController metrics = new MetricsController();
+		handler.setMetricsController(metrics);
+
+		handler.handleEmployeeNotFound(new EmployeeNotFoundException(7), new ModelMap());
+
+		Assert.assertEquals(metrics.getErrorsTotal(), 1L);
+		Map<String, Object> body = metrics.metrics();
+		Assert.assertEquals(body.get("errors_total"), 1L);
 	}
 }

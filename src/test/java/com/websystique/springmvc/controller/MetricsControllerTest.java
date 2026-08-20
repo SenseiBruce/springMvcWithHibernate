@@ -12,11 +12,13 @@ public class MetricsControllerTest {
 		MetricsController controller = new MetricsController();
 		controller.recordHealthCheck();
 		controller.recordHealthCheck();
+		controller.recordError();
 
 		Map<String, Object> body = controller.metrics();
 
 		Assert.assertEquals(body.get("health_checks_total"), 2L);
 		Assert.assertEquals(body.get("metrics_scrapes_total"), 1L);
+		Assert.assertEquals(body.get("errors_total"), 1L);
 	}
 
 	@Test
