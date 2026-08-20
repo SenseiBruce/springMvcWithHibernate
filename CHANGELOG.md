@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.2] - 2026-08-21
+
+### Added
+- Typed `ApiError` and `EmployeeValidationService` with TestNG coverage
+- Root `./test` entrypoint and `TESTING.md`
+- `dependencies.lock` plus CI drift check against the committed lock/tree
+- JaCoCo XML upload artifact and explicit CI `test` / `coverage` steps
+- H2-only guard in `scripts/test.sh`
+
 ## [1.0.1] - 2026-08-20
 
 ### Added

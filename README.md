@@ -4,10 +4,12 @@ Spring MVC web application for employee CRUD, backed by Hibernate ORM and MySQL 
 
 ## Quick start (fresh clone)
 
+See also [TESTING.md](TESTING.md).
+
 ```bash
 git clone https://github.com/SenseiBruce/springMvcWithHibernate.git
 cd springMvcWithHibernate
-./scripts/test.sh
+./test
 ```
 
 No MySQL and no manual config copy are required for tests. `make bootstrap` creates `application.properties` from the example when missing. The Maven Wrapper (`./mvnw`) installs Maven on first use.
@@ -46,7 +48,7 @@ Produces `target/SpringHibernateExample.war`.
 
 ```bash
 make test
-# equivalent: ./scripts/test.sh
+# equivalent: ./test
 # equivalent: ./mvnw test
 ```
 
@@ -83,7 +85,7 @@ App: `http://localhost:8080/` · health: `/health` · metrics: `/metrics`
 
 - Versions are pinned in `pom.xml` (Spring 5.3.x / Hibernate 5.6.x / javax namespace).
 - **Spring 6 / Jakarta EE is explicitly out of scope** for this codebase; staying on javax keeps the WAR deployable on Servlet 3/4 containers with JDK 8.
-- Resolved tree snapshot: `dependency-tree.txt` (regenerate with `make dependency-tree`).
+- Resolved tree snapshot: `dependency-tree.txt` and runtime lock list `dependencies.lock` (regenerate with `make dependency-tree`).
 - Dependabot opens weekly Maven update PRs; CI runs OWASP Dependency-Check.
 
 ## Project layout
