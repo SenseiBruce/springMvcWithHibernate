@@ -2,14 +2,17 @@ package com.websystique.springmvc.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.websystique.springmvc.configuration.RequestIdFilter;
+import com.websystique.springmvc.exception.ApiError;
 import com.websystique.springmvc.exception.EmployeeNotFoundException;
 
 /**
- * Maps domain exceptions to user-facing views.
+ * Maps domain exceptions to user-facing views with a typed ApiError payload.
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -18,8 +21,12 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(EmployeeNotFoundException.class)
 	public String handleEmployeeNotFound(EmployeeNotFoundException ex, ModelMap model) {
-		logger.warn("Handled missing employee: {}", ex.getMessage());
-		model.addAttribute("success", ex.getMessage());
+		ApiError error = new ApiError("EMPLOYEE_NOT_FOUND", ex.getMessage(),
+				MDC.get(RequestIdFilter.REQUEST_ID));
+		logger.warn("Handled missing employee code={} requestId={} message={}",
+				error.getCode(), error.getRequestId(), error.getMessage());
+		model.addAttribute("apiError", error);
+		model.addAttribute("success", error.getMessage());
 		return "success";
 	}
 }
