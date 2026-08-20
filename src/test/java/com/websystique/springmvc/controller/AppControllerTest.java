@@ -1,7 +1,6 @@
 package com.websystique.springmvc.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
@@ -17,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.springframework.context.MessageSource;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.testng.Assert;
@@ -26,6 +24,8 @@ import org.testng.annotations.Test;
 
 import com.websystique.springmvc.model.Employee;
 import com.websystique.springmvc.service.EmployeeService;
+import com.websystique.springmvc.service.EmployeeValidationService;
+import com.websystique.springmvc.service.ValidationResult;
 
 public class AppControllerTest {
 
@@ -33,7 +33,7 @@ public class AppControllerTest {
 	EmployeeService service;
 
 	@Mock
-	MessageSource message;
+	EmployeeValidationService validationService;
 
 	@InjectMocks
 	AppController appController;
@@ -78,24 +78,26 @@ public class AppControllerTest {
 
 	@Test
 	public void saveEmployeeWithInvalidSsnFormat() {
-		Employee emp = employees.get(0);
-		emp.setSsn("!!");
 		when(result.hasErrors()).thenReturn(false);
-		Assert.assertEquals(appController.saveEmployee(emp, result, model), "registration");
-		emp.setSsn("XXX111");
+		when(validationService.validateForWrite(any(Employee.class)))
+				.thenReturn(ValidationResult.error("ssn", "SSN_FORMAT", "SSN format is invalid"));
+		Assert.assertEquals(appController.saveEmployee(employees.get(0), result, model), "registration");
+		Assert.assertEquals(model.get("apiError"), "SSN_FORMAT");
 	}
 
 	@Test
 	public void saveEmployeeWithValidationErrorNonUniqueSSN() {
 		when(result.hasErrors()).thenReturn(false);
-		when(service.isEmployeeSsnUnique(anyInt(), anyString())).thenReturn(false);
+		when(validationService.validateForWrite(any(Employee.class)))
+				.thenReturn(ValidationResult.error("ssn", "SSN_DUPLICATE", "non unique"));
 		Assert.assertEquals(appController.saveEmployee(employees.get(0), result, model), "registration");
+		Assert.assertEquals(model.get("apiError"), "SSN_DUPLICATE");
 	}
 
 	@Test
 	public void saveEmployeeWithSuccess() {
 		when(result.hasErrors()).thenReturn(false);
-		when(service.isEmployeeSsnUnique(anyInt(), anyString())).thenReturn(true);
+		when(validationService.validateForWrite(any(Employee.class))).thenReturn(ValidationResult.ok());
 		doNothing().when(service).saveEmployee(any(Employee.class));
 		Assert.assertEquals(appController.saveEmployee(employees.get(0), result, model), "success");
 		Assert.assertEquals(model.get("success"), "Employee Axel registered successfully");
@@ -121,14 +123,16 @@ public class AppControllerTest {
 	@Test
 	public void updateEmployeeWithValidationErrorNonUniqueSSN() {
 		when(result.hasErrors()).thenReturn(false);
-		when(service.isEmployeeSsnUnique(anyInt(), anyString())).thenReturn(false);
+		when(validationService.validateForWrite(any(Employee.class)))
+				.thenReturn(ValidationResult.error("ssn", "SSN_DUPLICATE", "non unique"));
 		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model, ""), "registration");
+		Assert.assertEquals(model.get("apiError"), "SSN_DUPLICATE");
 	}
 
 	@Test
 	public void updateEmployeeWithSuccess() {
 		when(result.hasErrors()).thenReturn(false);
-		when(service.isEmployeeSsnUnique(anyInt(), anyString())).thenReturn(true);
+		when(validationService.validateForWrite(any(Employee.class))).thenReturn(ValidationResult.ok());
 		doNothing().when(service).updateEmployee(any(Employee.class));
 		Assert.assertEquals(appController.updateEmployee(employees.get(0), result, model, ""), "success");
 		Assert.assertEquals(model.get("success"), "Employee Axel updated successfully");

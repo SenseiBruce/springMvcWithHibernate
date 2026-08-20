@@ -1,12 +1,10 @@
 package com.websystique.springmvc.controller;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -17,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.websystique.springmvc.model.Employee;
 import com.websystique.springmvc.service.EmployeeService;
-import com.websystique.springmvc.util.SsnValidator;
+import com.websystique.springmvc.service.EmployeeValidationService;
+import com.websystique.springmvc.service.ValidationResult;
 
 @Controller
 @RequestMapping("/")
@@ -27,7 +26,7 @@ public class AppController {
 	EmployeeService service;
 
 	@Autowired
-	MessageSource messageSource;
+	EmployeeValidationService validationService;
 
 	/*
 	 * This method will list all existing employees.
@@ -63,26 +62,10 @@ public class AppController {
 			return "registration";
 		}
 
-		/*
-		 * Preferred way to achieve uniqueness of field [ssn] should be implementing
-		 * custom @Unique annotation and applying it on field [ssn] of Model class
-		 * [Employee].
-		 *
-		 * Below mentioned piece of code [if block] is to demonstrate that you can fill
-		 * custom errors outside the validation framework as well while still using
-		 * internationalized messages.
-		 */
-		if (!SsnValidator.isWellFormed(employee.getSsn())) {
-			FieldError ssnError = new FieldError("employee", "ssn", "SSN format is invalid");
-			result.addError(ssnError);
-			return "registration";
-		}
-
-		if (!service.isEmployeeSsnUnique(employee.getId(), employee.getSsn())) {
-			FieldError ssnError = new FieldError("employee", "ssn",
-					messageSource.getMessage("non.unique.ssn",
-							new String[] { employee.getSsn() }, Locale.getDefault()));
-			result.addError(ssnError);
+		ValidationResult validation = validationService.validateForWrite(employee);
+		if (!validation.isValid()) {
+			result.addError(new FieldError("employee", validation.getField(), validation.getMessage()));
+			model.addAttribute("apiError", validation.getCode());
 			return "registration";
 		}
 
@@ -116,11 +99,10 @@ public class AppController {
 			return "registration";
 		}
 
-		if (!service.isEmployeeSsnUnique(employee.getId(), employee.getSsn())) {
-			FieldError ssnError = new FieldError("employee", "ssn",
-					messageSource.getMessage("non.unique.ssn",
-							new String[] { employee.getSsn() }, Locale.getDefault()));
-			result.addError(ssnError);
+		ValidationResult validation = validationService.validateForWrite(employee);
+		if (!validation.isValid()) {
+			result.addError(new FieldError("employee", validation.getField(), validation.getMessage()));
+			model.addAttribute("apiError", validation.getCode());
 			return "registration";
 		}
 
