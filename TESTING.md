@@ -1,21 +1,22 @@
 # Testing
 
-## Command
+## Commands (any of these)
 
 ```bash
 ./test
-# or
-./scripts/test.sh
-# or
+npm test
+make test
+mvn -B test
 ./mvnw -B test
 ```
 
 ## Suite
 
-- Framework: TestNG (Surefire)
+- Frameworks: TestNG (primary) + JUnit smoke (`JunitSmokeTest`)
 - Suite file: `src/test/resources/testng.xml`
 - Specs: `src/test/java/**/*Test.java`
 - DAO integration tests use in-memory H2 only (`src/test/resources/application-test.properties`)
+- `scripts/test.sh` fails fast if the test profile is not H2
 
 ## Coverage gate
 

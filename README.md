@@ -10,6 +10,10 @@ See also [TESTING.md](TESTING.md).
 git clone https://github.com/SenseiBruce/springMvcWithHibernate.git
 cd springMvcWithHibernate
 ./test
+# equivalent entrypoints:
+#   npm test
+#   make test
+#   mvn -B test
 ```
 
 No MySQL and no manual config copy are required for tests. `make bootstrap` creates `application.properties` from the example when missing. The Maven Wrapper (`./mvnw`) installs Maven on first use.

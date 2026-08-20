@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.3] - 2026-08-21
+
+### Added
+- `package.json` `npm test` entrypoint for suite discovery
+- Dedicated `.github/workflows/test.yml` and fresh-clone CI job
+- JUnit smoke test alongside TestNG suite
+- `errors_total` metric incremented from GlobalExceptionHandler
+- Controller Bean Validation boundary tests
+
 ## [1.0.2] - 2026-08-21
 
 ### Added
