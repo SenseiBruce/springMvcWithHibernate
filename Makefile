@@ -6,7 +6,7 @@ bootstrap:
 	@echo "bootstrap: application.properties ready"
 
 test: bootstrap
-	./mvnw -B test
+	./scripts/test.sh
 
 verify: bootstrap
 	./mvnw -B verify
@@ -19,7 +19,7 @@ package: bootstrap
 
 dependency-tree: bootstrap
 	./mvnw -B dependency:tree -DoutputFile=dependency-tree.txt
-	./mvnw -B versions:display-dependency-updates >> dependency-tree.txt || true
+	./mvnw -B dependency:list -DoutputFile=dependencies.lock -DincludeScope=runtime
 
 run: package
 	@echo "Deploy target/SpringHibernateExample.war to a Servlet 3+ container, then curl /health and /metrics"

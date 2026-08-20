@@ -17,11 +17,17 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
           cache: maven
-      - name: lint
+      - name: bootstrap
         run: |
-          chmod +x mvnw scripts/*.sh
+          chmod +x mvnw test scripts/*.sh
           make bootstrap
-          make lint
+      - name: lint
+        run: ./mvnw -B checkstyle:check
+      - name: dependency-lock-drift
+        run: |
+          ./mvnw -B dependency:tree -DoutputFile=dependency-tree.txt
+          ./mvnw -B dependency:list -DoutputFile=dependencies.lock -DincludeScope=runtime
+          git diff --exit-code -- dependency-tree.txt dependencies.lock
 
   test:
     name: test
@@ -34,13 +40,21 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
           cache: maven
+      - name: bootstrap
+        run: |
+          chmod +x mvnw test scripts/*.sh
+          make bootstrap
       - name: test
-        run: |
-          chmod +x mvnw scripts/*.sh
-          ./scripts/test.sh
-      - name: verify
-        run: |
-          make verify
+        run: ./mvnw -B test
+      - name: coverage
+        run: ./mvnw -B verify -DskipTests
+      - name: upload-jacoco-xml
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: |
+            target/site/jacoco/jacoco.xml
+            target/site/jacoco/index.html
 
   dependency-audit:
     name: dependency-audit
