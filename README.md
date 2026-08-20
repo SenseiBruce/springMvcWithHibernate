@@ -20,22 +20,20 @@ Spring MVC web application for employee CRUD, backed by Hibernate ORM and MySQL 
 ## Setup
 
 1. Create a MySQL database named `websystique`.
-2. Copy `application.properties.example` to `src/main/resources/application.properties` and set:
+2. Copy the example config (real credentials stay gitignored):
 
-```properties
-jdbc.driverClassName=com.mysql.cj.jdbc.Driver
-jdbc.url=jdbc:mysql://localhost:3306/websystique?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-jdbc.username=myuser
-jdbc.password=mypassword
-hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+```bash
+cp src/main/resources/application.properties.example src/main/resources/application.properties
+# optional: cp .env.example .env
 ```
 
-3. Ensure the `EMPLOYEE` table exists (or enable schema generation if you prefer).
+3. Edit `jdbc.url`, `jdbc.username`, and `jdbc.password` for your MySQL instance.
 
 ## Build
 
 ```bash
-mvn clean package
+make package
+# or: mvn clean package
 ```
 
 Produces `target/SpringHibernateExample.war`.
@@ -45,16 +43,29 @@ Produces `target/SpringHibernateExample.war`.
 Tests run against an in-memory H2 database — **no MySQL required**.
 
 ```bash
-mvn test
+make test
+# or: mvn test
 ```
 
-This executes the TestNG suite covering controller, service, and DAO layers (`AppControllerTest`, `EmployeeServiceImplTest`, `EmployeeDaoImplTest`).
+This executes the TestNG suite in `src/test/resources/testng.xml` (controller, service, and DAO layers).
 
-Full verify (tests + Checkstyle + package):
+Lint only:
 
 ```bash
-mvn verify
+make lint
+# or: mvn checkstyle:check
 ```
+
+Full verify (tests + Checkstyle + JaCoCo coverage gate + package):
+
+```bash
+make verify
+# or: mvn verify
+```
+
+## Health check
+
+`GET /health` returns JSON `{ "status": "UP", "service": "SpringHibernateExample" }`.
 
 ## Run with Docker
 
@@ -62,14 +73,29 @@ mvn verify
 docker compose up --build
 ```
 
-App is available at `http://localhost:8080/`.
+App is available at `http://localhost:8080/` (health: `http://localhost:8080/health`).
+
+## Dependency Management
+
+Pinned versions live in `pom.xml`. A resolved tree snapshot is committed as `dependency-tree.txt`.
+
+Regenerate after dependency changes:
+
+```bash
+make dependency-tree
+# or: mvn dependency:tree -DoutputFile=dependency-tree.txt
+```
+
+Dependabot opens weekly PRs for Maven updates. CI also runs OWASP Dependency-Check.
 
 ## Project layout
 
 ```
 src/main/java/...   application code
-src/main/resources  application.properties, logback.xml, messages
+src/main/resources  application.properties.example, logback.xml, messages
 src/main/webapp     JSP views
 src/test/java/...   TestNG + Mockito + DBUnit tests
-src/test/resources  H2 test properties and DBUnit datasets
+src/test/resources  testng.xml, H2 properties, DBUnit datasets
+checkstyle.xml      lint rules enforced in CI
+Makefile            make test | verify | lint | package
 ```

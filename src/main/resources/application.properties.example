@@ -1,0 +1,10 @@
+# Copy to src/main/resources/application.properties and adjust for your MySQL instance.
+# Real application.properties is gitignored so credentials are never committed.
+
+jdbc.driverClassName=com.mysql.cj.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/websystique?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+jdbc.username=myuser
+jdbc.password=mypassword
+hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+hibernate.show_sql=true
+hibernate.format_sql=true

@@ -7,7 +7,9 @@ import com.websystique.springmvc.model.Employee;
 public interface EmployeeService {
 
 	Employee findById(int id);
-	
+
+	Employee findByIdRequired(int id);
+
 	void saveEmployee(Employee employee);
 	
 	void updateEmployee(Employee employee);

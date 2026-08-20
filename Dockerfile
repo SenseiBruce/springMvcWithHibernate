@@ -3,7 +3,8 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 COPY checkstyle.xml .
-RUN mvn -B -DskipTests package
+RUN cp src/main/resources/application.properties.example src/main/resources/application.properties \
+	&& mvn -B -DskipTests package
 
 FROM tomcat:9.0-jdk8-temurin
 RUN rm -rf /usr/local/tomcat/webapps/*

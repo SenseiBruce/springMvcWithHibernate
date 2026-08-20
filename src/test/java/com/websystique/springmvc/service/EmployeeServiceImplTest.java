@@ -50,6 +50,19 @@ public class EmployeeServiceImplTest {
 	}
 
 	@Test
+	public void findByIdRequiredReturnsEmployee() {
+		Employee emp = employees.get(0);
+		when(dao.findById(anyInt())).thenReturn(emp);
+		Assert.assertEquals(employeeService.findByIdRequired(emp.getId()), emp);
+	}
+
+	@Test(expectedExceptions = EmployeeNotFoundException.class)
+	public void findByIdRequiredWhenMissingThrows() {
+		when(dao.findById(anyInt())).thenReturn(null);
+		employeeService.findByIdRequired(99);
+	}
+
+	@Test
 	public void saveEmployee() {
 		doNothing().when(dao).saveEmployee(any(Employee.class));
 		employeeService.saveEmployee(employees.get(0));

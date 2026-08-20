@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="SpringHibernateExampleSuite" verbose="1">
+	<test name="UnitAndIntegrationTests">
+		<packages>
+			<package name="com.websystique.springmvc.controller"/>
+			<package name="com.websystique.springmvc.service"/>
+			<package name="com.websystique.springmvc.dao"/>
+		</packages>
+	</test>
+</suite>

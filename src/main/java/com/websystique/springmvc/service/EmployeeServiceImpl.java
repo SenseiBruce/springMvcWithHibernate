@@ -25,6 +25,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.findById(id);
 	}
 
+	public Employee findByIdRequired(int id) {
+		Employee employee = dao.findById(id);
+		if (employee == null) {
+			logger.warn("Employee lookup failed for id={}", id);
+			throw new EmployeeNotFoundException(id);
+		}
+		return employee;
+	}
+
 	public void saveEmployee(Employee employee) {
 		logger.info("Saving employee with ssn={}", employee.getSsn());
 		dao.saveEmployee(employee);
