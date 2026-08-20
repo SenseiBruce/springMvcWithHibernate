@@ -49,4 +49,21 @@ public class GlobalExceptionHandlerTest {
 		Map<String, Object> body = metrics.metrics();
 		Assert.assertEquals(body.get("errors_total"), 1L);
 	}
+
+	@Test
+	public void handleUnexpectedEmitsMdcTaggedError() {
+		MDC.put(RequestIdFilter.REQUEST_ID, "req-err");
+		GlobalExceptionHandler handler = new GlobalExceptionHandler();
+		MetricsController metrics = new MetricsController();
+		handler.setMetricsController(metrics);
+		ModelMap model = new ModelMap();
+
+		String view = handler.handleUnexpected(new IllegalStateException("boom"), model);
+
+		Assert.assertEquals(view, "success");
+		ApiError error = (ApiError) model.get("apiError");
+		Assert.assertEquals(error.getCode(), "UNEXPECTED_ERROR");
+		Assert.assertEquals(error.getRequestId(), "req-err");
+		Assert.assertEquals(metrics.getErrorsTotal(), 1L);
+	}
 }

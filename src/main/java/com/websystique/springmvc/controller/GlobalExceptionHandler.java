@@ -25,13 +25,21 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(EmployeeNotFoundException.class)
 	public String handleEmployeeNotFound(EmployeeNotFoundException ex, ModelMap model) {
+		return handleTypedError("EMPLOYEE_NOT_FOUND", ex, model);
+	}
+
+	@ExceptionHandler(Exception.class)
+	public String handleUnexpected(Exception ex, ModelMap model) {
+		return handleTypedError("UNEXPECTED_ERROR", ex, model);
+	}
+
+	private String handleTypedError(String code, Exception ex, ModelMap model) {
 		if (metricsController != null) {
 			metricsController.recordError();
 		}
-		ApiError error = new ApiError("EMPLOYEE_NOT_FOUND", ex.getMessage(),
-				MDC.get(RequestIdFilter.REQUEST_ID));
-		logger.warn("Handled missing employee code={} requestId={} message={}",
-				error.getCode(), error.getRequestId(), error.getMessage());
+		ApiError error = new ApiError(code, ex.getMessage(), MDC.get(RequestIdFilter.REQUEST_ID));
+		logger.error("Handled exception code={} requestId={} message={}",
+				error.getCode(), error.getRequestId(), error.getMessage(), ex);
 		model.addAttribute("apiError", error);
 		model.addAttribute("success", error.getMessage());
 		return "success";
