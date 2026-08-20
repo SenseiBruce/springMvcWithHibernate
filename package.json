@@ -1,0 +1,15 @@
+{
+  "name": "spring-mvc-with-hibernate",
+  "private": true,
+  "description": "Spring MVC + Hibernate employee CRUD. Tests run via Maven/TestNG.",
+  "scripts": {
+    "test": "./test",
+    "lint": "make lint",
+    "build": "./mvnw -B -DskipTests package",
+    "verify": "make verify",
+    "bootstrap": "make bootstrap"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
