@@ -24,6 +24,8 @@
 		<dbunit.version>2.7.3</dbunit.version>
 		<slf4j.version>1.7.36</slf4j.version>
 		<logback.version>1.2.13</logback.version>
+		<jacoco.version>0.8.11</jacoco.version>
+		<jacoco.minimum.line.coverage>0.70</jacoco.minimum.line.coverage>
 	</properties>
 
 	<dependencies>
@@ -154,6 +156,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>${mockito.version}</version>
@@ -190,14 +198,28 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.5</version>
-				<configuration>
-					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
-					<includes>
-						<include>**/*Test.java</include>
-					</includes>
-				</configuration>
+				<executions>
+					<execution>
+						<id>default-test</id>
+						<configuration>
+							<suiteXmlFiles>
+								<suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+							</suiteXmlFiles>
+						</configuration>
+					</execution>
+					<execution>
+						<id>junit-smoke</id>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<suiteXmlFiles combine.self="override"/>
+							<includes>
+								<include>**/JunitSmokeTest.java</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -232,7 +254,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.11</version>
+				<version>${jacoco.version}</version>
 				<configuration>
 					<excludes>
 						<!-- Container wiring is exercised at runtime; unit suite targets app layers -->
@@ -273,7 +295,7 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.70</minimum>
+											<minimum>${jacoco.minimum.line.coverage}</minimum>
 										</limit>
 									</limits>
 								</rule>
