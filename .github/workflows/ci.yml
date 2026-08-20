@@ -45,8 +45,12 @@ jobs:
           chmod +x mvnw test scripts/*.sh
           make bootstrap
       - name: test
-        run: ./mvnw -B test
+        run: mvn -B test
+      - name: npm-test-entrypoint
+        run: npm test
       - name: coverage
+        env:
+          JACOCO_MIN_LINE_COVERAGE: '0.70'
         run: ./mvnw -B verify -DskipTests
       - name: upload-jacoco-xml
         uses: actions/upload-artifact@v4
@@ -55,6 +59,27 @@ jobs:
           path: |
             target/site/jacoco/jacoco.xml
             target/site/jacoco/index.html
+
+  fresh-clone-test:
+    name: fresh-clone-test
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: src-repo
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: maven
+      - name: fresh-clone-test
+        run: |
+          mkdir -p "${{ github.workspace }}/clean-clone"
+          cp -a "${{ github.workspace }}/src-repo/." "${{ github.workspace }}/clean-clone/"
+          cd "${{ github.workspace }}/clean-clone"
+          chmod +x mvnw test scripts/*.sh
+          ./test
 
   dependency-audit:
     name: dependency-audit

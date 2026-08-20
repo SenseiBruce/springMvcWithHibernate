@@ -1,0 +1,32 @@
+name: test
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: maven
+      - name: chmod
+        run: chmod +x mvnw test scripts/*.sh
+      - name: test
+        run: |
+          make bootstrap
+          mvn -B test
+      - name: coverage-gate
+        env:
+          JACOCO_MIN_LINE_COVERAGE: '0.70'
+        run: |
+          ./mvnw -B verify -DskipTests
+          test -f target/site/jacoco/jacoco.xml
+          grep -q 'counter type="LINE"' target/site/jacoco/jacoco.xml
