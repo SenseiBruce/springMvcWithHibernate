@@ -115,6 +115,11 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>6.6</version>
+		</dependency>
 
 		<!-- Servlet+JSP+JSTL -->
 		<dependency>
@@ -208,7 +213,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>3.3.1</version>
 				<configuration>
-					<configLocation>checkstyle.xml</configLocation>
+					<configLocation>config/checkstyle/checkstyle.xml</configLocation>
 					<consoleOutput>true</consoleOutput>
 					<failsOnError>true</failsOnError>
 					<failOnViolation>true</failOnViolation>
@@ -228,6 +233,12 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.11</version>
+				<configuration>
+					<excludes>
+						<!-- Container wiring is exercised at runtime; unit suite targets app layers -->
+						<exclude>com/websystique/springmvc/configuration/**</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -256,7 +267,7 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.40</minimum>
+											<minimum>0.70</minimum>
 										</limit>
 									</limits>
 								</rule>

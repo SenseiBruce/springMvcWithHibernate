@@ -6,6 +6,7 @@
 			<package name="com.websystique.springmvc.service"/>
 			<package name="com.websystique.springmvc.dao"/>
 			<package name="com.websystique.springmvc.util"/>
+			<package name="com.websystique.springmvc.configuration"/>
 		</packages>
 	</test>
 </suite>

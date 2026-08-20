@@ -2,6 +2,16 @@
 
 Spring MVC web application for employee CRUD, backed by Hibernate ORM and MySQL (H2 for tests).
 
+## Quick start (fresh clone)
+
+```bash
+git clone https://github.com/SenseiBruce/springMvcWithHibernate.git
+cd springMvcWithHibernate
+./scripts/test.sh
+```
+
+No MySQL and no manual config copy are required for tests. `make bootstrap` creates `application.properties` from the example when missing. The Maven Wrapper (`./mvnw`) installs Maven on first use.
+
 ## Architecture
 
 | Layer | Package | Role |
@@ -13,59 +23,53 @@ Spring MVC web application for employee CRUD, backed by Hibernate ORM and MySQL 
 
 ## Prerequisites
 
-- JDK 8+
-- Apache Maven 3.6+
-- MySQL 8 (runtime only; tests use in-memory H2)
+- JDK 8+ (Maven Wrapper included; system Maven optional)
+- MySQL 8 only for running the WAR against a real database
 
-## Setup
-
-1. Create a MySQL database named `websystique`.
-2. Copy the example config (real credentials stay gitignored):
+## Setup (runtime / Docker)
 
 ```bash
-cp src/main/resources/application.properties.example src/main/resources/application.properties
+make bootstrap
+# edit src/main/resources/application.properties for your MySQL instance
 # optional: cp .env.example .env
 ```
-
-3. Edit `jdbc.url`, `jdbc.username`, and `jdbc.password` for your MySQL instance.
 
 ## Build
 
 ```bash
 make package
-# or: mvn clean package
 ```
 
 Produces `target/SpringHibernateExample.war`.
 
 ## Run tests
 
-Tests run against an in-memory H2 database — **no MySQL required**.
-
 ```bash
 make test
-# or: mvn test
+# equivalent: ./scripts/test.sh
+# equivalent: ./mvnw test
 ```
 
-This executes the TestNG suite in `src/test/resources/testng.xml` (controller, service, and DAO layers).
+TestNG suite: `src/test/resources/testng.xml` (controller, service, DAO, util, request-id filter).
 
-Lint only:
+Lint:
 
 ```bash
 make lint
-# or: mvn checkstyle:check
 ```
 
-Full verify (tests + Checkstyle + JaCoCo coverage gate + package):
+Full verify (tests + Checkstyle + JaCoCo ≥ 70% line coverage + package):
 
 ```bash
 make verify
-# or: mvn verify
 ```
 
-## Health check
+## Observability
 
-`GET /health` returns JSON `{ "status": "UP", "service": "SpringHibernateExample" }`.
+- `GET /health` — liveness JSON (`status=UP`)
+- `GET /metrics` — in-process counters (`health_checks_total`, `metrics_scrapes_total`)
+- JSON logs via `logstash-logback-encoder` (`src/main/resources/logback.xml`)
+- `X-Request-Id` correlation id on every request (`RequestIdFilter`)
 
 ## Run with Docker
 
@@ -73,29 +77,21 @@ make verify
 docker compose up --build
 ```
 
-App is available at `http://localhost:8080/` (health: `http://localhost:8080/health`).
+App: `http://localhost:8080/` · health: `/health` · metrics: `/metrics`
 
 ## Dependency Management
 
-Pinned versions live in `pom.xml`. A resolved tree snapshot is committed as `dependency-tree.txt`.
-
-Regenerate after dependency changes:
-
-```bash
-make dependency-tree
-# or: mvn dependency:tree -DoutputFile=dependency-tree.txt
-```
-
-Dependabot opens weekly PRs for Maven updates. CI also runs OWASP Dependency-Check.
+- Versions are pinned in `pom.xml` (Spring 5.3.x / Hibernate 5.6.x / javax namespace).
+- **Spring 6 / Jakarta EE is explicitly out of scope** for this codebase; staying on javax keeps the WAR deployable on Servlet 3/4 containers with JDK 8.
+- Resolved tree snapshot: `dependency-tree.txt` (regenerate with `make dependency-tree`).
+- Dependabot opens weekly Maven update PRs; CI runs OWASP Dependency-Check.
 
 ## Project layout
 
 ```
-src/main/java/...   application code
-src/main/resources  application.properties.example, logback.xml, messages
-src/main/webapp     JSP views
-src/test/java/...   TestNG + Mockito + DBUnit tests
-src/test/resources  testng.xml, H2 properties, DBUnit datasets
-checkstyle.xml      lint rules enforced in CI
-Makefile            make test | verify | lint | package
+./mvnw                 Maven Wrapper (preferred build entrypoint)
+scripts/test.sh        zero-touch test runner for fresh clones
+Makefile               bootstrap | test | lint | verify | package
+config/checkstyle/     Checkstyle rules enforced in CI
+src/test/resources/testng.xml
 ```

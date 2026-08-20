@@ -38,6 +38,10 @@ com.websystique.springmvc:SpringHibernateExample:war:1.0.0
 +- org.slf4j:slf4j-api:jar:1.7.36:compile
 +- ch.qos.logback:logback-classic:jar:1.2.13:compile
 |  \- ch.qos.logback:logback-core:jar:1.2.13:compile
++- net.logstash.logback:logstash-logback-encoder:jar:6.6:compile
+|  \- com.fasterxml.jackson.core:jackson-databind:jar:2.12.0:compile
+|     +- com.fasterxml.jackson.core:jackson-annotations:jar:2.12.0:compile
+|     \- com.fasterxml.jackson.core:jackson-core:jar:2.12.0:compile
 +- javax.servlet:javax.servlet-api:jar:4.0.1:provided
 +- javax.servlet.jsp:javax.servlet.jsp-api:jar:2.3.3:provided
 +- javax.servlet:jstl:jar:1.2:compile
@@ -60,3 +64,181 @@ com.websystique.springmvc:SpringHibernateExample:war:1.0.0
       +- com.oracle.database.security:osdt_core:jar:19.3.0.0:test
       +- com.oracle.database.ha:simplefan:jar:19.3.0.0:test
       \- com.oracle.database.ha:ons:jar:19.3.0.0:test
+
+===== available dependency updates (Spring 6 / Jakarta out of scope) =====
+[INFO] Scanning for projects...
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-release-plugin/3.0.1/maven-release-plugin-3.0.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-release-plugin/3.0.1/maven-release-plugin-3.0.1.pom (9.8 kB at 40 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/release/maven-release/3.0.1/maven-release-3.0.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/release/maven-release/3.0.1/maven-release-3.0.1.pom (11 kB at 311 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-release-plugin/3.0.1/maven-release-plugin-3.0.1.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-release-plugin/3.0.1/maven-release-plugin-3.0.1.jar (61 kB at 1.6 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions-maven-plugin/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions-maven-plugin/maven-metadata.xml (1.5 kB at 10 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions-maven-plugin/2.21.0/versions-maven-plugin-2.21.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions-maven-plugin/2.21.0/versions-maven-plugin-2.21.0.pom (12 kB at 361 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions/2.21.0/versions-2.21.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions/2.21.0/versions-2.21.0.pom (15 kB at 401 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/mojo-parent/95/mojo-parent-95.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/mojo-parent/95/mojo-parent-95.pom (39 kB at 1.0 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions-maven-plugin/2.21.0/versions-maven-plugin-2.21.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions-maven-plugin/2.21.0/versions-maven-plugin-2.21.0.jar (301 kB at 6.6 MB/s)
+[INFO] 
+[INFO] ----------< com.websystique.springmvc:SpringHibernateExample >----------
+[INFO] Building SpringHibernateExample 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- versions:2.21.0:display-dependency-updates (default-cli) @ SpringHibernateExample ---
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-api/2.21.0/versions-api-2.21.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-api/2.21.0/versions-api-2.21.0.pom (940 B at 28 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-model/2.21.0/versions-model-2.21.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-model/2.21.0/versions-model-2.21.0.pom (2.7 kB at 54 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-model-report/2.21.0/versions-model-report-2.21.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-model-report/2.21.0/versions-model-report-2.21.0.pom (2.6 kB at 80 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-common/2.21.0/versions-common-2.21.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-common/2.21.0/versions-common-2.21.0.pom (5.4 kB at 162 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/woodstox/woodstox-core/7.1.1/woodstox-core-7.1.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/woodstox/woodstox-core/7.1.1/woodstox-core-7.1.1.pom (9.9 kB at 290 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-collections4/4.5.0/commons-collections4-4.5.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-collections4/4.5.0/commons-collections4-4.5.0.pom (26 kB at 744 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/commons-io/commons-io/2.21.0/commons-io-2.21.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/commons-io/commons-io/2.21.0/commons-io-2.21.0.pom (21 kB at 336 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/91/commons-parent-91.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/91/commons-parent-91.pom (79 kB at 616 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.3.4/org.eclipse.sisu.plexus-0.3.4.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.3.4/org.eclipse.sisu.plexus-0.3.4.pom (4.2 kB at 119 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/sisu-plexus/0.3.4/sisu-plexus-0.3.4.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/sisu-plexus/0.3.4/sisu-plexus-0.3.4.pom (14 kB at 416 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.3.4/org.eclipse.sisu.inject-0.3.4.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.3.4/org.eclipse.sisu.inject-0.3.4.pom (2.6 kB at 77 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/sisu-inject/0.3.4/sisu-inject-0.3.4.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/sisu-inject/0.3.4/sisu-inject-0.3.4.pom (14 kB at 437 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-text/1.15.0/commons-text-1.15.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-text/1.15.0/commons-text-1.15.0.pom (24 kB at 718 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/93/commons-parent-93.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/93/commons-parent-93.pom (79 kB at 2.3 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-i18n/1.1.0/plexus-i18n-1.1.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-i18n/1.1.0/plexus-i18n-1.1.0.pom (2.8 kB at 87 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils/1.11.0/commons-beanutils-1.11.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils/1.11.0/commons-beanutils-1.11.0.pom (19 kB at 552 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/84/commons-parent-84.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/84/commons-parent-84.pom (78 kB at 2.1 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-archiver/4.11.0/plexus-archiver-4.11.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-archiver/4.11.0/plexus-archiver-4.11.0.pom (5.6 kB at 182 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-io/3.6.0/plexus-io-3.6.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-io/3.6.0/plexus-io-3.6.0.pom (3.5 kB at 120 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.20.0/commons-codec-1.20.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.20.0/commons-codec-1.20.0.pom (19 kB at 587 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/tukaani/xz/1.11/xz-1.11.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/tukaani/xz/1.11/xz-1.11.pom (1.9 kB at 62 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/github/luben/zstd-jni/1.5.7-6/zstd-jni-1.5.7-6.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/github/luben/zstd-jni/1.5.7-6/zstd-jni-1.5.7-6.pom (2.0 kB at 67 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-api/2.21.0/versions-api-2.21.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-api/2.21.0/versions-api-2.21.0.jar (6.6 kB at 214 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-model/2.21.0/versions-model-2.21.0.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-model-report/2.21.0/versions-model-report-2.21.0.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-common/2.21.0/versions-common-2.21.0.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-collections4/4.5.0/commons-collections4-4.5.0.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils/1.11.0/commons-beanutils-1.11.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-model/2.21.0/versions-model-2.21.0.jar (13 kB at 561 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-archiver/4.11.0/plexus-archiver-4.11.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-archiver/4.11.0/plexus-archiver-4.11.0.jar (227 kB at 4.5 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-io/3.6.0/plexus-io-3.6.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-io/3.6.0/plexus-io-3.6.0.jar (80 kB at 1.1 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.20.0/commons-codec-1.20.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-model-report/2.21.0/versions-model-report-2.21.0.jar (47 kB at 584 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/tukaani/xz/1.11/xz-1.11.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/versions/versions-common/2.21.0/versions-common-2.21.0.jar (186 kB at 2.3 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/github/luben/zstd-jni/1.5.7-6/zstd-jni-1.5.7-6.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/commons-beanutils/commons-beanutils/1.11.0/commons-beanutils-1.11.0.jar (247 kB at 2.7 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.3.4/org.eclipse.sisu.inject-0.3.4.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.20.0/commons-codec-1.20.0.jar (401 kB at 3.6 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/commons-io/commons-io/2.21.0/commons-io-2.21.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/tukaani/xz/1.11/xz-1.11.jar (169 kB at 1.5 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-text/1.15.0/commons-text-1.15.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.3.4/org.eclipse.sisu.inject-0.3.4.jar (379 kB at 2.7 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-i18n/1.1.0/plexus-i18n-1.1.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-collections4/4.5.0/commons-collections4-4.5.0.jar (899 kB at 6.4 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/woodstox/woodstox-core/7.1.1/woodstox-core-7.1.1.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-text/1.15.0/commons-text-1.15.0.jar (265 kB at 1.7 MB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/commons-io/commons-io/2.21.0/commons-io-2.21.0.jar (585 kB at 3.5 MB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-i18n/1.1.0/plexus-i18n-1.1.0.jar (10 kB at 60 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/woodstox/woodstox-core/7.1.1/woodstox-core-7.1.1.jar (1.6 MB at 6.1 MB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/github/luben/zstd-jni/1.5.7-6/zstd-jni-1.5.7-6.jar (7.4 MB at 16 MB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/javax/validation/validation-api/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jadira/usertype/usertype.core/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/net/logstash/logback/logstash-logback-encoder/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/dbunit/dbunit/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-core/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/joda-time/joda-time/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/glassfish/javax.el/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/javax/servlet/jsp/javax.servlet.jsp-api/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/spring-test/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/javax/servlet/jstl/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/hibernate/hibernate-core/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/mockito/mockito-core/maven-metadata.xml (12 kB at 524 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/testng/testng/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/maven-metadata.xml (3.8 kB at 54 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/spring-webmvc/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/spring-test/maven-metadata.xml (11 kB at 135 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/joda-time/joda-time/maven-metadata.xml (2.3 kB at 28 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/spring-core/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/ch/qos/logback/logback-classic/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/spring-webmvc/maven-metadata.xml (12 kB at 405 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/net/logstash/logback/logstash-logback-encoder/maven-metadata.xml (1.9 kB at 18 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/javax/validation/validation-api/maven-metadata.xml (1.2 kB at 11 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/spring-orm/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/h2database/h2/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/spring-context/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/ch/qos/logback/logback-classic/maven-metadata.xml (5.9 kB at 217 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/spring-core/maven-metadata.xml (12 kB at 381 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/mysql/mysql-connector-j/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/javax/servlet/javax.servlet-api/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/spring-orm/maven-metadata.xml (12 kB at 562 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/dbunit/dbunit/maven-metadata.xml (1.3 kB at 9.8 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/hibernate/validator/hibernate-validator/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/spring-tx/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/spring-context/maven-metadata.xml (12 kB at 407 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/spring-web/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/glassfish/javax.el/maven-metadata.xml (987 B at 6.1 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/hibernate/validator/hibernate-validator/maven-metadata.xml (3.7 kB at 136 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/javax/servlet/javax.servlet-api/maven-metadata.xml (972 B at 31 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/mysql/mysql-connector-j/maven-metadata.xml (804 B at 24 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/spring-web/maven-metadata.xml (12 kB at 419 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jadira/usertype/usertype.core/maven-metadata.xml (1.2 kB at 6.0 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/testng/testng/maven-metadata.xml (3.1 kB at 26 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/javax/servlet/jsp/javax.servlet.jsp-api/maven-metadata.xml (508 B at 2.3 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/javax/servlet/jstl/maven-metadata.xml (497 B at 2.1 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/spring-tx/maven-metadata.xml (11 kB at 93 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/hibernate/hibernate-core/maven-metadata.xml (21 kB at 84 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/h2database/h2/maven-metadata.xml (4.9 kB at 26 kB/s)
+[INFO] The following dependencies in Dependencies have newer versions:
+[INFO]   ch.qos.logback:logback-classic ....................... 1.2.13 -> 1.6.3
+[INFO]   com.h2database:h2 ................................. 2.2.224 -> 2.4.240
+[INFO]   com.mysql:mysql-connector-j ......................... 8.0.33 -> 26.7.0
+[INFO]   joda-time:joda-time ................................. 2.12.7 -> 2.14.3
+[INFO]   net.logstash.logback:logstash-logback-encoder ............. 6.6 -> 9.0
+[INFO]   org.dbunit:dbunit ..................................... 2.7.3 -> 3.5.1
+[INFO]   org.glassfish:javax.el ............................ 3.0.0 -> 3.0.1-b12
+[INFO]   org.hibernate:hibernate-core ............. 5.6.15.Final -> 8.0.0.Beta1
+[INFO]   org.hibernate.validator:hibernate-validator ...
+[INFO]                                               6.2.5.Final -> 9.1.3.Final
+[INFO]   org.mockito:mockito-core ............................ 4.11.0 -> 5.23.0
+[INFO]   org.slf4j:slf4j-api ........................... 1.7.36 -> 2.1.0-alpha1
+[INFO]   org.springframework:spring-context ................ 5.3.39 -> 7.1.0-M1
+[INFO]   org.springframework:spring-core ................... 5.3.39 -> 7.1.0-M1
+[INFO]   org.springframework:spring-orm .................... 5.3.39 -> 7.1.0-M1
+[INFO]   org.springframework:spring-test ................... 5.3.39 -> 7.1.0-M1
+[INFO]   org.springframework:spring-tx ..................... 5.3.39 -> 7.1.0-M1
+[INFO]   org.springframework:spring-web .................... 5.3.39 -> 7.1.0-M1
+[INFO]   org.springframework:spring-webmvc ................. 5.3.39 -> 7.1.0-M1
+[INFO]   org.testng:testng .................................... 7.5.1 -> 7.12.0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.500 s
+[INFO] Finished at: 2026-08-21T00:30:57+05:30
+[INFO] ------------------------------------------------------------------------

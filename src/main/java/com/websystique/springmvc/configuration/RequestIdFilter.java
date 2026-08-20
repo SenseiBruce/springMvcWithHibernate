@@ -1,0 +1,36 @@
+package com.websystique.springmvc.configuration;
+
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.MDC;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+/**
+ * Attaches a per-request correlation id to the MDC for structured logs.
+ */
+public class RequestIdFilter extends OncePerRequestFilter {
+
+	public static final String REQUEST_ID = "requestId";
+
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain) throws ServletException, IOException {
+		String requestId = request.getHeader("X-Request-Id");
+		if (requestId == null || requestId.trim().isEmpty()) {
+			requestId = UUID.randomUUID().toString();
+		}
+		MDC.put(REQUEST_ID, requestId);
+		response.setHeader("X-Request-Id", requestId);
+		try {
+			filterChain.doFilter(request, response);
+		} finally {
+			MDC.remove(REQUEST_ID);
+		}
+	}
+}

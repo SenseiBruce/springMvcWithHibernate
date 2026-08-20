@@ -1,5 +1,6 @@
 package com.websystique.springmvc.configuration;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -14,7 +15,12 @@ public class AppInitializer implements WebApplicationInitializer {
 
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(AppConfig.class);
+		ctx.register(HibernateConfiguration.class);
 		ctx.setServletContext(container);
+
+		FilterRegistration.Dynamic requestIdFilter = container.addFilter(
+				"requestIdFilter", new RequestIdFilter());
+		requestIdFilter.addMappingForUrlPatterns(null, false, "/*");
 
 		ServletRegistration.Dynamic servlet = container.addServlet(
 				"dispatcher", new DispatcherServlet(ctx));

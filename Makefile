@@ -1,16 +1,25 @@
-.PHONY: test verify lint package dependency-tree
+.PHONY: bootstrap test verify lint package dependency-tree run
 
-test:
-	mvn -B test
+bootstrap:
+	@test -f src/main/resources/application.properties \
+		|| cp src/main/resources/application.properties.example src/main/resources/application.properties
+	@echo "bootstrap: application.properties ready"
 
-verify:
-	mvn -B verify
+test: bootstrap
+	./mvnw -B test
 
-lint:
-	mvn -B checkstyle:check
+verify: bootstrap
+	./mvnw -B verify
 
-package:
-	mvn -B -DskipTests package
+lint: bootstrap
+	./mvnw -B checkstyle:check
 
-dependency-tree:
-	mvn -B dependency:tree -DoutputFile=dependency-tree.txt
+package: bootstrap
+	./mvnw -B -DskipTests package
+
+dependency-tree: bootstrap
+	./mvnw -B dependency:tree -DoutputFile=dependency-tree.txt
+	./mvnw -B versions:display-dependency-updates >> dependency-tree.txt || true
+
+run: package
+	@echo "Deploy target/SpringHibernateExample.war to a Servlet 3+ container, then curl /health and /metrics"
