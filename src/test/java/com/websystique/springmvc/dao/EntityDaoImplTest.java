@@ -2,9 +2,11 @@ package com.websystique.springmvc.dao;
 
 import javax.sql.DataSource;
 
+import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.ext.h2.H2DataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,11 +24,11 @@ public abstract class EntityDaoImplTest extends AbstractTransactionalTestNGSprin
 
 	@BeforeMethod
 	public void setUp() throws Exception {
-		IDatabaseConnection dbConn = new DatabaseDataSourceConnection(
-				dataSource);
+		IDatabaseConnection dbConn = new DatabaseDataSourceConnection(dataSource);
+		dbConn.getConfig().setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new H2DataTypeFactory());
 		DatabaseOperation.CLEAN_INSERT.execute(dbConn, getDataSet());
 	}
-	
+
 	protected abstract IDataSet getDataSet() throws Exception;
 
 }

@@ -24,7 +24,7 @@ public class AppController {
 
 	@Autowired
 	EmployeeService service;
-	
+
 	@Autowired
 	MessageSource messageSource;
 
@@ -63,25 +63,28 @@ public class AppController {
 		}
 
 		/*
-		 * Preferred way to achieve uniqueness of field [ssn] should be implementing custom @Unique annotation 
-		 * and applying it on field [ssn] of Model class [Employee].
-		 * 
-		 * Below mentioned peace of code [if block] is to demonstrate that you can fill custom errors outside the validation
-		 * framework as well while still using internationalized messages.
-		 * 
+		 * Preferred way to achieve uniqueness of field [ssn] should be implementing
+		 * custom @Unique annotation and applying it on field [ssn] of Model class
+		 * [Employee].
+		 *
+		 * Below mentioned piece of code [if block] is to demonstrate that you can fill
+		 * custom errors outside the validation framework as well while still using
+		 * internationalized messages.
 		 */
-		if(!service.isEmployeeSsnUnique(employee.getId(), employee.getSsn())){
-			FieldError ssnError =new FieldError("employee","ssn",messageSource.getMessage("non.unique.ssn", new String[]{employee.getSsn()}, Locale.getDefault()));
-		    result.addError(ssnError);
+		if (!service.isEmployeeSsnUnique(employee.getId(), employee.getSsn())) {
+			FieldError ssnError = new FieldError("employee", "ssn",
+					messageSource.getMessage("non.unique.ssn",
+							new String[] { employee.getSsn() }, Locale.getDefault()));
+			result.addError(ssnError);
 			return "registration";
 		}
-		
+
 		service.saveEmployee(employee);
 
-		model.addAttribute("success", "Employee " + employee.getName() + " registered successfully");
+		model.addAttribute("success",
+				"Employee " + employee.getName() + " registered successfully");
 		return "success";
 	}
-
 
 	/*
 	 * This method will provide the medium to update an existing employee.
@@ -93,7 +96,7 @@ public class AppController {
 		model.addAttribute("edit", true);
 		return "registration";
 	}
-	
+
 	/*
 	 * This method will be called on form submission, handling POST request for
 	 * updating employee in database. It also validates the user input
@@ -106,19 +109,21 @@ public class AppController {
 			return "registration";
 		}
 
-		if(!service.isEmployeeSsnUnique(employee.getId(), employee.getSsn())){
-			FieldError ssnError =new FieldError("employee","ssn",messageSource.getMessage("non.unique.ssn", new String[]{employee.getSsn()}, Locale.getDefault()));
-		    result.addError(ssnError);
+		if (!service.isEmployeeSsnUnique(employee.getId(), employee.getSsn())) {
+			FieldError ssnError = new FieldError("employee", "ssn",
+					messageSource.getMessage("non.unique.ssn",
+							new String[] { employee.getSsn() }, Locale.getDefault()));
+			result.addError(ssnError);
 			return "registration";
 		}
 
 		service.updateEmployee(employee);
 
-		model.addAttribute("success", "Employee " + employee.getName()	+ " updated successfully");
+		model.addAttribute("success",
+				"Employee " + employee.getName() + " updated successfully");
 		return "success";
 	}
 
-	
 	/*
 	 * This method will delete an employee by it's SSN value.
 	 */

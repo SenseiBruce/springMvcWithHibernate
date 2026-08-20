@@ -9,39 +9,39 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="EMPLOYEE")
+@Table(name = "EMPLOYEE")
 public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Size(min=3, max=50)
+	@Size(min = 3, max = 50)
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
 	@NotNull
-	@DateTimeFormat(pattern="dd/MM/yyyy") 
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "JOINING_DATE", nullable = false)
-	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate joiningDate;
 
 	@NotNull
-	@Digits(integer=8, fraction=2)
+	@Digits(integer = 8, fraction = 2)
 	@Column(name = "SALARY", nullable = false)
 	private BigDecimal salary;
-	
+
 	@NotEmpty
-	@Column(name = "SSN", unique=true, nullable = false)
+	@Column(name = "SSN", unique = true, nullable = false)
 	private String ssn;
 
 	public int getId() {
@@ -95,20 +95,26 @@ public class Employee {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (!(obj instanceof Employee))
+		}
+		if (!(obj instanceof Employee)) {
 			return false;
+		}
 		Employee other = (Employee) obj;
-		if (id != other.id)
+		if (id != other.id) {
 			return false;
+		}
 		if (ssn == null) {
-			if (other.ssn != null)
+			if (other.ssn != null) {
 				return false;
-		} else if (!ssn.equals(other.ssn))
+			}
+		} else if (!ssn.equals(other.ssn)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -117,8 +123,5 @@ public class Employee {
 		return "Employee [id=" + id + ", name=" + name + ", joiningDate="
 				+ joiningDate + ", salary=" + salary + ", ssn=" + ssn + "]";
 	}
-	
-	
-	
 
 }
