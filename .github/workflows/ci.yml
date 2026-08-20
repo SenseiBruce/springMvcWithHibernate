@@ -46,8 +46,6 @@ jobs:
           make bootstrap
       - name: test
         run: mvn -B test
-      - name: npm-test-entrypoint
-        run: npm test
       - name: coverage
         env:
           JACOCO_MIN_LINE_COVERAGE: '0.70'

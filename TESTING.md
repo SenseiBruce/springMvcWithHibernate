@@ -4,11 +4,12 @@
 
 ```bash
 ./test
-npm test
 make test
 mvn -B test
 ./mvnw -B test
 ```
+
+This is a **Maven** project (`pom.xml`). There is no Node/npm dependency graph.
 
 ## Suite
 

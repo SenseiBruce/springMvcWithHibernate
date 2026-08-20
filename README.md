@@ -10,10 +10,7 @@ See also [TESTING.md](TESTING.md).
 git clone https://github.com/SenseiBruce/springMvcWithHibernate.git
 cd springMvcWithHibernate
 ./test
-# equivalent entrypoints:
-#   npm test
-#   make test
-#   mvn -B test
+# equivalent: make test   OR   mvn -B test   OR   ./mvnw -B test
 ```
 
 No MySQL and no manual config copy are required for tests. `make bootstrap` creates `application.properties` from the example when missing. The Maven Wrapper (`./mvnw`) installs Maven on first use.
@@ -73,9 +70,11 @@ make verify
 ## Observability
 
 - `GET /health` — liveness JSON (`status=UP`)
-- `GET /metrics` — in-process counters (`health_checks_total`, `metrics_scrapes_total`)
+- `GET /metrics` — counters: `health_checks_total`, `metrics_scrapes_total`, `errors_total`
 - JSON logs via `logstash-logback-encoder` (`src/main/resources/logback.xml`)
-- `X-Request-Id` correlation id on every request (`RequestIdFilter`)
+- `X-Request-Id` correlation id on every request (`RequestIdFilter`); exceptions include the id in structured error logs
+- Optional log shipping: set `LOGSTASH_HOST` in the runtime environment if your aggregator scrapes stdout JSON (tests never require an external collector)
+- List pagination: `GET /list?page=0&size=10`
 
 ## Run with Docker
 
