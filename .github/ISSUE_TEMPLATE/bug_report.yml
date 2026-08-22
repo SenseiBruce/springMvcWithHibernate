@@ -1,0 +1,30 @@
+name: Bug report
+description: Report a problem in Spring MVC + Hibernate Employee Manager
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Clear outline of the bug, steps to reproduce, and expected vs actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Commands, inputs, or a short snippet that demonstrates the issue. Include full stack trace if there was an exception.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: JDK version and OS (and Maven/Docker versions if relevant)
+      placeholder: "JDK 8, macOS 15"
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      placeholder: git SHA
