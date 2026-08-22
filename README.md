@@ -100,3 +100,11 @@ Makefile               bootstrap | test | lint | verify | package
 config/checkstyle/     Checkstyle rules enforced in CI
 src/test/resources/testng.xml
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Release notes live in [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+Released under the [MIT License](LICENSE).
